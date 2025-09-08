@@ -1,0 +1,112 @@
+/* Tổng thể Dashboard */
+.dashboard-container {
+    min-height: 100vh;
+    background-color: #f3f4f6; /* xám nhạt */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Navbar */
+  .dashboard-navbar {
+    background: linear-gradient(90deg, #3b82f6, #2563eb);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .dashboard-navbar h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .dashboard-navbar button {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+  
+  .dashboard-navbar button:hover {
+    background-color: #dc2626;
+  }
+  
+  /* Main content padding */
+  .dashboard-content {
+    padding: 2rem;
+  }
+  
+  /* Cards thống kê */
+  .dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .dashboard-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+  
+  .dashboard-card h3 {
+    font-size: 1rem;
+    color: #6b7280; /* xám */
+    margin-bottom: 0.5rem;
+  }
+  
+  .dashboard-card p {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #111827;
+  }
+  
+  /* Grid chính cho UserList và BookList */
+  .dashboard-main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  /* Container cho UserList / BookList */
+  .dashboard-section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  
+  /* Section title */
+  .dashboard-section h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  /* Responsive nhỏ */
+  @media (max-width: 640px) {
+    .dashboard-navbar {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .dashboard-cards {
+      grid-template-columns: 1fr;
+    }
+    .dashboard-main {
+      grid-template-columns: 1fr;
+    }
+  }
+  

@@ -1,0 +1,113 @@
+/* Container tổng */
+.user-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Title */
+  .user-container h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  /* Form */
+  .user-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .user-form input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border 0.2s;
+  }
+  
+  .user-form input:focus {
+    border-color: #3b82f6;
+    outline: none;
+  }
+  
+  .user-form button {
+    background-color: #3b82f6;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .user-form button:hover {
+    background-color: #2563eb;
+  }
+  
+  /* List */
+  .user-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .user-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    transition: background 0.2s;
+  }
+  
+  .user-list li:hover {
+    background: #f1f5f9;
+  }
+  
+  /* User info */
+  .user-info {
+    flex: 1;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  /* Buttons edit & delete */
+  .user-actions button {
+    margin-left: 5px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+  }
+  
+  .user-actions .edit-btn {
+    background-color: #facc15;
+    color: #fff;
+  }
+  
+  .user-actions .edit-btn:hover {
+    background-color: #eab308;
+  }
+  
+  .user-actions .delete-btn {
+    background-color: #ef4444;
+    color: #fff;
+  }
+  
+  .user-actions .delete-btn:hover {
+    background-color: #dc2626;
+  }
+  
