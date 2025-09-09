@@ -1,4 +1,3 @@
-// BookList.js
 import React, { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import BookForm from "./BookForm";
@@ -19,7 +18,7 @@ const BookList = () => {
         category,
         createdon,
         watching,
-        chapter(id, chapternumber, chaptertitle, content)
+        chapter(id, chapternumber, chaptertitle)
       `)
       .order('createdon', { ascending: false });
     if (!error) setBooks(data);
@@ -52,25 +51,37 @@ const BookList = () => {
 
   return (
     <div className="book-container">
-      <h3>Books</h3>
-      <button onClick={handleAdd}>Add Book</button>
+      <div className="book-header">
+        <h3>Books</h3>
+        <button className="add-btn" onClick={handleAdd}>+ Add Book</button>
+      </div>
 
       <ul className="book-list">
         {books.map(b => (
           <li key={b.id} className="book-item">
-            <img src={b.fileimage || 'https://via.placeholder.com/80x120?text=No+Image'} alt={b.nametitle} className="book-image"/>
-            <div>
+            <img 
+              src={b.fileimage || 'https://via.placeholder.com/100x140?text=No+Image'} 
+              alt={b.nametitle} 
+              className="book-image"
+            />
+            <div className="book-info">
               <h4>{b.nametitle}</h4>
-              <p>Category: {b.category}</p>
-              <p>Watching: {b.watching}</p>
-              <p>Chapters:</p>
-              <ul>
-                {b.chapter.map(ch => (
-                  <li key={ch.id}>{ch.chapternumber}. {ch.chaptertitle}</li>
-                ))}
-              </ul>
-              <button onClick={() => handleEdit(b)}>Edit</button>
-              <button onClick={() => handleDelete(b.id)}>Delete</button>
+              <p><strong>Category:</strong> {b.category}</p>
+              <p><strong>Watching:</strong> {b.watching}</p>
+              {b.chapter.length > 0 && (
+                <>
+                  <p><strong>Chapters:</strong></p>
+                  <ul className="chapter-list">
+                    {b.chapter.map(ch => (
+                      <li key={ch.id}>{ch.chapternumber}. {ch.chaptertitle}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              <div className="book-actions">
+                <button className="edit-btn" onClick={() => handleEdit(b)}>Edit</button>
+                <button className="delete-btn" onClick={() => handleDelete(b.id)}>Delete</button>
+              </div>
             </div>
           </li>
         ))}
@@ -80,7 +91,7 @@ const BookList = () => {
       {showForm && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <button className="close-btn" onClick={handleCloseForm}>X</button>
+            <button className="close-btn" onClick={handleCloseForm}>×</button>
             <BookForm 
               editingBook={editingBook} 
               setEditingBook={setEditingBook} 

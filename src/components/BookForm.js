@@ -1,4 +1,3 @@
-// BookForm.js
 import React, { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import './Book.css';
@@ -9,6 +8,7 @@ const BookForm = ({ editingBook, setEditingBook, refreshBooks }) => {
   const [category, setCategory] = useState('');
   const [chapters, setChapters] = useState([]);
   const [newChapterTitle, setNewChapterTitle] = useState('');
+  const [newChapterContent, setNewChapterContent] = useState('');
 
   useEffect(() => {
     if (editingBook) {
@@ -23,14 +23,15 @@ const BookForm = ({ editingBook, setEditingBook, refreshBooks }) => {
       setChapters([]);
     }
     setNewChapterTitle('');
+    setNewChapterContent('');
   }, [editingBook]);
 
-  // Cập nhật nội dung chapter đã có
+  // Thay đổi chapter hiện có
   const handleChapterChange = (id, field, value) => {
     setChapters(prev => prev.map(ch => ch.id === id ? { ...ch, [field]: value } : ch));
   };
 
-  // Lưu thay đổi chapter hiện tại
+  // Lưu chapter đã chỉnh sửa
   const handleSaveChapters = async () => {
     for (const ch of chapters) {
       await supabase.from('chapter').update({
@@ -38,7 +39,6 @@ const BookForm = ({ editingBook, setEditingBook, refreshBooks }) => {
         content: ch.content
       }).eq('id', ch.id);
     }
-    alert('Chapters updated successfully!');
     refreshBooks();
   };
 
@@ -50,15 +50,17 @@ const BookForm = ({ editingBook, setEditingBook, refreshBooks }) => {
       titlebookid: editingBook.id,
       chapternumber: nextNumber,
       chaptertitle: newChapterTitle,
-      content: ""
+      content: newChapterContent
     }]).select().single();
     if (!error && newCh) {
       setChapters([...chapters, newCh]);
       setNewChapterTitle('');
+      setNewChapterContent('');
       refreshBooks();
     }
   };
 
+  // Thêm hoặc cập nhật Book
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -70,17 +72,15 @@ const BookForm = ({ editingBook, setEditingBook, refreshBooks }) => {
         await handleAddChapter();
       }
 
-      alert('Book updated successfully!');
+      handleSaveChapters();
       setEditingBook(null);
     } else {
-      // Thêm sách mới
       const { data: newBook, error } = await supabase.from('titlebook')
         .insert([{ nametitle, fileimage, category, createdon: new Date(), watching: 0 }])
         .select()
         .single();
 
       if (!error && newBook) {
-        // Tạo chapter đầu tiên
         await supabase.from('chapter').insert([{
           titlebookid: newBook.id,
           chapternumber: 1,
@@ -88,8 +88,6 @@ const BookForm = ({ editingBook, setEditingBook, refreshBooks }) => {
           content: ""
         }]);
       }
-
-      alert('Book added successfully!');
     }
 
     setNametitle('');
@@ -97,6 +95,7 @@ const BookForm = ({ editingBook, setEditingBook, refreshBooks }) => {
     setCategory('');
     setChapters([]);
     setNewChapterTitle('');
+    setNewChapterContent('');
     refreshBooks();
   };
 
@@ -112,27 +111,34 @@ const BookForm = ({ editingBook, setEditingBook, refreshBooks }) => {
           <h3>Chapters</h3>
           {chapters.map(ch => (
             <div key={ch.id} className="chapter-item">
-              <input 
-                type="text" 
-                value={ch.chaptertitle} 
-                onChange={e => handleChapterChange(ch.id, 'chaptertitle', e.target.value)} 
+              <input
+                type="text"
+                value={ch.chaptertitle}
+                onChange={e => handleChapterChange(ch.id, 'chaptertitle', e.target.value)}
                 placeholder="Chapter Title"
               />
-              <textarea 
-                value={ch.content} 
-                onChange={e => handleChapterChange(ch.id, 'content', e.target.value)} 
+              <textarea
+                value={ch.content}
+                onChange={e => handleChapterChange(ch.id, 'content', e.target.value)}
                 placeholder="Content"
               />
             </div>
           ))}
-          <button type="button" onClick={handleSaveChapters} className="save-chapters-btn">Save Chapters</button>
+          <button type="button" className="save-chapters-btn" onClick={handleSaveChapters}>
+            Save Chapters
+          </button>
 
           <div className="add-new-chapter">
-            <input 
-              type="text" 
-              placeholder="New Chapter Title" 
-              value={newChapterTitle} 
-              onChange={e => setNewChapterTitle(e.target.value)} 
+            <input
+              type="text"
+              placeholder="New Chapter Title"
+              value={newChapterTitle}
+              onChange={e => setNewChapterTitle(e.target.value)}
+            />
+            <textarea
+              placeholder="New Chapter Content"
+              value={newChapterContent}
+              onChange={e => setNewChapterContent(e.target.value)}
             />
             <button type="button" onClick={handleAddChapter}>Add Chapter</button>
           </div>
