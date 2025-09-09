@@ -13,6 +13,8 @@ export const handleLogin = async (email, password) => {
     .select('*')
     .eq('userName', email)
     .eq('password', password)
+    .eq('isAdmin', true)
+    .eq('isActive', true)
     .single();
   if (error || !data) {
     return { success: false, message: 'Login failed', user: null };

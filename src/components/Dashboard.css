@@ -1,112 +1,175 @@
-/* Tổng thể Dashboard */
+/* Dashboard tổng thể */
 .dashboard-container {
-    min-height: 100vh;
-    background-color: #f3f4f6; /* xám nhạt */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  /* Navbar */
-  .dashboard-navbar {
-    background: linear-gradient(90deg, #3b82f6, #2563eb);
-    color: white;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-  
-  .dashboard-navbar h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  .dashboard-navbar button {
-    background-color: #ef4444;
-    color: white;
-    border: none;
-    padding: 6px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s;
-  }
-  
-  .dashboard-navbar button:hover {
-    background-color: #dc2626;
-  }
-  
-  /* Main content padding */
-  .dashboard-content {
-    padding: 2rem;
-  }
-  
-  /* Cards thống kê */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  background: #f5f6fa;
+}
+
+/* Navbar */
+.dashboard-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #4caf50;
+  color: white;
+  padding: 15px 25px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.dashboard-navbar h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.dashboard-navbar div {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.dashboard-navbar button {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 5px;
+  background: #e53935;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.dashboard-navbar button:hover {
+  background: #d32f2f;
+}
+
+/* Nội dung chính */
+.dashboard-content {
+  padding: 25px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Statistic Cards */
+.dashboard-cards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.dashboard-card {
+  flex: 1 1 250px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-3px);
+}
+
+.dashboard-card h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.dashboard-card p {
+  font-size: 22px;
+  font-weight: 600;
+  color: #4caf50;
+}
+
+/* Main sections */
+.dashboard-main {
+  display: flex;
+  flex-direction: column; /* dọc */
+  gap: 30px;
+}
+
+/* Section container */
+.dashboard-section {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.dashboard-section h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+
+/* UserList & BookList gọn gàng */
+.user-list, .book-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-list li, .book-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.user-list li:last-child, .book-list li:last-child {
+  border-bottom: none;
+}
+
+.user-list li span, .book-list li span {
+  font-size: 15px;
+  color: #333;
+}
+
+.user-list li button, .book-list li button {
+  margin-left: 8px;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.user-list li button.edit-btn, .book-list li button.edit-btn {
+  background: #2196f3;
+  color: white;
+}
+
+.user-list li button.delete-btn, .book-list li button.delete-btn {
+  background: #f44336;
+  color: white;
+}
+
+.user-list li button:hover, .book-list li button:hover {
+  opacity: 0.85;
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
   .dashboard-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    flex-direction: column;
   }
-  
-  .dashboard-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    transition: transform 0.2s, box-shadow 0.2s;
+
+  .user-list li, .book-list li {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .dashboard-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+
+  .user-list li button, .book-list li button {
+    margin-top: 6px;
   }
-  
-  .dashboard-card h3 {
-    font-size: 1rem;
-    color: #6b7280; /* xám */
-    margin-bottom: 0.5rem;
-  }
-  
-  .dashboard-card p {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #111827;
-  }
-  
-  /* Grid chính cho UserList và BookList */
-  .dashboard-main {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-  }
-  
-  /* Container cho UserList / BookList */
-  .dashboard-section {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  }
-  
-  /* Section title */
-  .dashboard-section h3 {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-  
-  /* Responsive nhỏ */
-  @media (max-width: 640px) {
-    .dashboard-navbar {
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .dashboard-cards {
-      grid-template-columns: 1fr;
-    }
-    .dashboard-main {
-      grid-template-columns: 1fr;
-    }
-  }
-  
+}
