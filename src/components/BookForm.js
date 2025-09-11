@@ -7,6 +7,7 @@ const BookForm = ({ editingBook, setEditingBook, refreshBooks }) => {
   const [fileimage, setFileimage] = useState('');
   const [category, setCategory] = useState('');
   const [chapters, setChapters] = useState([]);
+  const [idTitileBook, setIdTitileBook] = useState('');
   const [newChapterTitle, setNewChapterTitle] = useState('');
   const [newChapterContent, setNewChapterContent] = useState('');
 
@@ -16,6 +17,7 @@ const BookForm = ({ editingBook, setEditingBook, refreshBooks }) => {
       setFileimage(editingBook.fileimage);
       setCategory(editingBook.category);
       setChapters(editingBook.chapter || []);
+      setIdTitileBook(editingBook.id);
     } else {
       setNametitle('');
       setFileimage('');
@@ -39,6 +41,18 @@ const BookForm = ({ editingBook, setEditingBook, refreshBooks }) => {
         content: ch.content
       }).eq('id', ch.id);
     }
+    refreshBooks();
+  };
+  const handlUpdateTitle = async () => {
+    await supabase.from('titlebook').update({ nametitle, fileimage, category })
+      .eq('id', editingBook.id);
+      refreshBooks();
+}
+
+  const handleDeleteChapters =  async (id) => {
+      await supabase.from('chapter')
+                    .delete()
+                    .eq('id', id);
     refreshBooks();
   };
 
@@ -79,13 +93,12 @@ const BookForm = ({ editingBook, setEditingBook, refreshBooks }) => {
         .insert([{ nametitle, fileimage, category, createdon: new Date(), watching: 0 }])
         .select()
         .single();
-
       if (!error && newBook) {
         await supabase.from('chapter').insert([{
           titlebookid: newBook.id,
           chapternumber: 1,
-          chaptertitle: "Chương 1",
-          content: ""
+          chaptertitle: newChapterTitle,
+          content: newChapterContent
         }]);
       }
     }
@@ -105,7 +118,13 @@ const BookForm = ({ editingBook, setEditingBook, refreshBooks }) => {
       <input type="text" placeholder="Title" value={nametitle} onChange={e => setNametitle(e.target.value)} required />
       <input type="text" placeholder="Image URL" value={fileimage} onChange={e => setFileimage(e.target.value)} />
       <input type="text" placeholder="Category" value={category} onChange={e => setCategory(e.target.value)} required />
-
+      {(editingBook && (<div>
+                <button
+                  type="button"
+                  onClick={() => handlUpdateTitle()}>
+                Update Title
+              </button>
+              </div>))}
       {editingBook && (
         <div className="chapters-container">
           <h3>Chapters</h3>
@@ -122,13 +141,23 @@ const BookForm = ({ editingBook, setEditingBook, refreshBooks }) => {
                 onChange={e => handleChapterChange(ch.id, 'content', e.target.value)}
                 placeholder="Content"
               />
+              <div className="chapter-actions">
+                <button
+                  type="button"
+                  className="delete-btn"
+                  onClick={() => handleDeleteChapters(ch.id)}>
+                Delete Chapters
+              </button>
+                </div>
+
             </div>
+            
           ))}
           <button type="button" className="save-chapters-btn" onClick={handleSaveChapters}>
             Save Chapters
           </button>
 
-          <div className="add-new-chapter">
+          <div className="chapter-add">
             <input
               type="text"
               placeholder="New Chapter Title"
@@ -144,8 +173,24 @@ const BookForm = ({ editingBook, setEditingBook, refreshBooks }) => {
           </div>
         </div>
       )}
-
-      <button type="submit">{editingBook ? "Update Book" : "Add Book"}</button>
+      {!editingBook && ( <div className="chapter-item new-chapter">
+        <h3>Chapters</h3>
+        <input
+          type="text"
+          placeholder="New Chapter Title"
+          value={newChapterTitle}
+          onChange={e => setNewChapterTitle(e.target.value)}
+        />
+        <textarea
+          placeholder="New Chapter Content"
+          value={newChapterContent}
+          onChange={e => setNewChapterContent(e.target.value)}
+        />
+        <button type="submit" className="save-book-btn">
+     Save Book
+  </button>
+      </div>
+    )}
     </form>
   );
 };

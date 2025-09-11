@@ -1,113 +1,163 @@
-/* Container tổng */
+/* Container */
 .user-container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background: #ffffff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  /* Title */
-  .user-container h3 {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #333;
-  }
-  
-  /* Form */
-  .user-form {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-  
-  .user-form input {
-    flex: 1;
-    padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1rem;
-    transition: border 0.2s;
-  }
-  
-  .user-form input:focus {
-    border-color: #3b82f6;
-    outline: none;
-  }
-  
-  .user-form button {
-    background-color: #3b82f6;
-    color: #fff;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .user-form button:hover {
-    background-color: #2563eb;
-  }
-  
-  /* List */
-  .user-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .user-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 12px;
-    margin-bottom: 8px;
-    background: #f9f9f9;
-    border-radius: 6px;
-    transition: background 0.2s;
-  }
-  
-  .user-list li:hover {
-    background: #f1f5f9;
-  }
-  
-  /* User info */
-  .user-info {
-    flex: 1;
-    font-size: 1rem;
-    color: #333;
-  }
-  
-  /* Buttons edit & delete */
-  .user-actions button {
-    margin-left: 5px;
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background 0.2s;
-  }
-  
-  .user-actions .edit-btn {
-    background-color: #facc15;
-    color: #fff;
-  }
-  
-  .user-actions .edit-btn:hover {
-    background-color: #eab308;
-  }
-  
-  .user-actions .delete-btn {
-    background-color: #ef4444;
-    color: #fff;
-  }
-  
-  .user-actions .delete-btn:hover {
-    background-color: #dc2626;
-  }
-  
+  max-width: 850px;
+  margin: 30px auto;
+  padding: 10px;
+  font-family: "Inter", sans-serif;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  color: #111827;
+}
+
+/* Toast */
+.toast {
+  background: #10b981;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  text-align: center;
+  font-weight: 500;
+  animation: fadeIn 0.4s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* User list */
+.user-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform 0.2s;
+}
+
+.user-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Form */
+.user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.user-info input {
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: #f9fafb;
+  font-size: 14px;
+  color: #374151;
+  transition: 0.2s;
+}
+
+.user-info input:disabled {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.user-info input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Toggle Active/Inactive */
+.toggle-btn {
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s;
+  color: #fff;
+}
+
+.toggle-btn.active {
+  background-color: #10b981; /* xanh */
+}
+
+.toggle-btn.inactive {
+  background-color: #ef4444; /* đỏ */
+}
+
+/* Action buttons */
+.user-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-left: 18px;
+}
+
+.user-actions button {
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  color: white;
+}
+
+.edit-btn {
+  background: #3b82f6;
+}
+
+.edit-btn:hover {
+  background: #2563eb;
+}
+
+.delete-btn {
+  background: #ef4444;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
+
+.cancel-btn {
+  background: #9ca3af;
+}
+
+.cancel-btn:hover {
+  background: #6b7280;
+}

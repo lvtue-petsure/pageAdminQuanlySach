@@ -18,7 +18,7 @@ const BookList = () => {
         category,
         createdon,
         watching,
-        chapter(id, chapternumber, chaptertitle)
+        chapter(id, chapternumber, chaptertitle, content)
       `)
       .order('createdon', { ascending: false });
     if (!error) setBooks(data);
