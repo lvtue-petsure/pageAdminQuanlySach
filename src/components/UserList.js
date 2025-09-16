@@ -6,7 +6,7 @@ const UserList = () => {
   const [users, setUsers] = useState([]);
   const [handleUser, setHandleUser] = useState(null);
   const [isUserChange, setUserChange] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [popupOpen, setPopupOpen] = useState(false);
 
   const fetchUsers = async () => {
     const { data, error } = await supabase.from("users").select("*");
@@ -18,11 +18,6 @@ const UserList = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
-
-  const handleDelete = async (id) => {
-    await supabase.from("users").delete().eq("id", id);
-    fetchUsers();
-  };
 
   const onUserEditing = (field, value) => {
     setUserChange(true);
@@ -50,8 +45,7 @@ const UserList = () => {
         .eq("id", handleUser.id);
 
       setHandleUser(null);
-      setToastMessage("Cập nhật thành công!");
-      setTimeout(() => setToastMessage(""), 3000);
+      setPopupOpen(true);
       fetchUsers();
     }
   };
@@ -70,10 +64,19 @@ const UserList = () => {
     <div className="user-container">
       <h2 className="title">Quản lý Users</h2>
 
-      {toastMessage && <div className="toast">{toastMessage}</div>}
+      {/* Popup */}
+      {popupOpen && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <h3>Cập nhật thành công!</h3>
+            <p>Dữ liệu người dùng đã được lưu.</p>
+            <button onClick={() => setPopupOpen(false)}>Đóng</button>
+          </div>
+        </div>
+      )}
 
       <ul className="user-list">
-        {users.map((u) => (
+        {(users == [] )?(<div>đang tải danh sách</div>):users.map((u) => (
           <li key={u.id}>
             <div className="user-card">
               <div className="user-info">
@@ -162,12 +165,7 @@ const UserList = () => {
                     >
                       Edit
                     </button>
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDelete(u.id)}
-                    >
-                      Delete
-                    </button>
+                    
                   </>
                 )}
               </div>

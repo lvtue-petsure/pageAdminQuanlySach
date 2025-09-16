@@ -7,7 +7,7 @@ const BookList = () => {
   const [books, setBooks] = useState([]);
   const [editingBook, setEditingBook] = useState(null);
   const [showForm, setShowForm] = useState(false);
-
+  const [isLoading, setLoading] = useState(true);
   const fetchBooks = async () => {
     const { data, error } = await supabase
       .from('titlebook')
@@ -21,6 +21,7 @@ const BookList = () => {
         chapter(id, chapternumber, chaptertitle, content)
       `)
       .order('createdon', { ascending: false });
+      setLoading(false);
     if (!error) setBooks(data);
   };
 
@@ -57,7 +58,7 @@ const BookList = () => {
       </div>
 
       <ul className="book-list">
-        {books.map(b => (
+       {(books == [] || isLoading)?(<div>đang tải danh sách</div>):books.map(b => (
           <li key={b.id} className="book-item">
             <img 
               src={b.fileimage || 'https://via.placeholder.com/100x140?text=No+Image'} 
